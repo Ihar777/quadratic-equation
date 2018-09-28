@@ -7,23 +7,25 @@ Example:
   console.log(solutions); // [2, 3]
 */
 
-module.exports = function solveEquation(equation) {
-  let a, b, c;
-//  equation = a*x*x + bx + c;
- a = Number(equation.slice(0,equation.indexOf("*")));
- b = equation.slice((equation.indexOf("*")+1),equation.lastIndexOf("*"));
- b = Number(b.replace(/^-?[0-9]/g, ""));
- c = equation.slice((equation.lastIndexOf("*")+1));
- c = Number(c.replace(/^-?[0-9]/g, ""));
-  a*x*x + bx + c == 0;
-  let D = b*b - 4*a*c;
-  let d = 2 * a;
-  let x1 = (-b + Math.sqrt(D))/d;
-  let x2 = (-b - Math.sqrt(D))/d;
+ module.exports = function solveEquation(equation) {
+  let a=0, b=0, c=0, x1=0, x2=0, D=0;
   let arr = [];
-  arr.push(x1);
-  arr.push(x2);
-  arr.sort();
-  // console.log(arr);
-  return arr;
+
+let arrfromstr = equation.split(' ');
+a = arrfromstr[0];
+b = (arrfromstr[3] == '+') ? arrfromstr[4] : arrfromstr[3].concat(arrfromstr[4]);
+c = (arrfromstr[7] == '+') ? arrfromstr[8] : arrfromstr[7].concat(arrfromstr[8]);
+
+ D = b*b - 4*a*c;
+
+ x1 = Math.round((-1)*b + Math.sqrt(D))/(2*a);
+ x2 = Math.round((-1)*b - Math.sqrt(D))/(2*a);
+ if(x1<x2){
+ arr.push(x1,x2);
+ } else {
+  arr.push(x2,x1);
+ }
+
+return arr;
+
 }
